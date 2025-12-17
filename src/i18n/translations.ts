@@ -82,10 +82,6 @@ export const translations = {
       follow: 'Síguenos',
       rights: (year: number) => `© ${year} Hotel Sion Real. Todos los derechos reservados.`,
     },
-    gallery: {
-      title: 'Descubre',
-      subtitle: 'Nuestros Espacios',
-    },
     videos: {
       title: 'Conoce más',
       subtitle: 'Videos de nuestras instalaciones',
@@ -215,10 +211,6 @@ export const translations = {
       links: 'Links',
       follow: 'Follow Us',
       rights: (year: number) => `© ${year} Hotel Sion Real. All rights reserved.`,
-    },
-    gallery: {
-      title: 'Discover',
-      subtitle: 'Our Spaces',
     },
     videos: {
       title: 'Learn More',
@@ -350,10 +342,6 @@ export const translations = {
       follow: 'Suivez-nous',
       rights: (year: number) => `© ${year} Hotel Sion Real. Tous droits réservés.`,
     },
-    gallery: {
-      title: 'Découvrir',
-      subtitle: 'Nos Espaces',
-    },
     videos: {
       title: 'En Savoir Plus',
       subtitle: 'Vidéos de nos installations',
@@ -483,10 +471,6 @@ export const translations = {
       links: 'Links',
       follow: 'Siga-nos',
       rights: (year: number) => `© ${year} Hotel Sion Real. Todos os direitos reservados.`,
-    },
-    gallery: {
-      title: 'Descobrir',
-      subtitle: 'Nossos Espaços',
     },
     videos: {
       title: 'Saiba Mais',
