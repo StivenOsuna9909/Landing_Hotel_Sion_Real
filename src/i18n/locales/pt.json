@@ -1,0 +1,95 @@
+{
+  "common": {
+    "hotel": "Hotel",
+    "reserve": "Reservar",
+    "contact": "Contato",
+    "rooms": "Quartos",
+    "gallery": "Galeria",
+    "home": "Início"
+  },
+  "hero": {
+    "title": "Sion Real",
+    "subtitle": "Nos esforçamos para oferecer um melhor serviço.",
+    "reserveNow": "Reservar Agora",
+    "viewRooms": "Ver Quartos"
+  },
+  "rooms": {
+    "title": "Nossos Quartos",
+    "subtitle": "Cada quarto foi projetado para oferecer uma experiência única de conforto e elegância",
+    "accommodation": "Acomodação",
+    "reserveRoom": "Reservar este Quarto",
+    "family": {
+      "name": "Quarto Familiar",
+      "description": "Quarto espaçoso com múltiplas camas, ideal para famílias ou grupos. TV, ar condicionado e banheiro privado."
+    },
+    "triple": {
+      "name": "Quarto Triplo",
+      "description": "Quarto confortável com três camas, perfeito para amigos ou pequenos grupos. Todas as comodidades incluídas."
+    },
+    "double": {
+      "name": "Quarto Duplo",
+      "description": "Quarto aconchegante e econômico para duas pessoas. Inclui banheiro privado e todas as comodidades básicas."
+    },
+    "features": {
+      "multipleBeds": "Múltiplas Camas",
+      "threeBeds": "3 Camas",
+      "twoBeds": "2 Camas",
+      "fourGuests": "4 Hóspedes",
+      "threeGuests": "3 Hóspedes",
+      "twoGuests": "2 Hóspedes",
+      "wifi": "WiFi Grátis",
+      "tv": "TV",
+      "ac": "Ar Condicionado ou apenas ventilador",
+      "privateBath": "Banheiro Privado",
+      "laundry": "Serviços de lavanderia e passadoria",
+      "coffeeStation": "Estação de café ilimitado e água na recepção"
+    }
+  },
+  "booking": {
+    "title": "Reserve sua Estadia",
+    "subtitle": "Preencha o formulário para verificar disponibilidade e tarifas",
+    "checkIn": "Data de Entrada",
+    "checkOut": "Data de Saída",
+    "guests": "Número de Hóspedes",
+    "roomType": "Tipo de Quarto",
+    "nights": "Noites",
+    "total": "Total",
+    "confirmReservation": "Confirmar Reserva",
+    "errors": {
+      "checkInRequired": "Selecione a data de entrada",
+      "checkInPast": "A data não pode ser anterior a hoje",
+      "checkOutRequired": "Selecione a data de saída",
+      "checkOutBefore": "Deve ser posterior à entrada",
+      "guestsMin": "Mínimo 1 hóspede",
+      "guestsMax": "Máximo 10 hóspedes",
+      "roomRequired": "Selecione um quarto"
+    }
+  },
+  "contact": {
+    "title": "Encontre-nos",
+    "address": "Endereço",
+    "phone": "Telefone",
+    "receptionHours": "Horário de Recepção",
+    "receptionHoursValue": "24 horas, 7 dias por semana",
+    "addressValue": "Cl. 7 # 3-25<br />Neiva, Huila<br />Colômbia"
+  },
+  "footer": {
+    "description": "Um refúgio de luxo onde a elegância colombiana se funde com o conforto moderno.",
+    "links": "Links",
+    "follow": "Siga-nos",
+    "rights": "© {{year}} Hotel Sion Real. Todos os direitos reservados."
+  },
+  "gallery": {
+    "title": "Descobrir",
+    "subtitle": "Nossos Espaços"
+  },
+  "videos": {
+    "title": "Saiba Mais",
+    "subtitle": "Vídeos de nossas instalações"
+  },
+  "tariff": {
+    "title": "Tarifário",
+    "subtitle": "Preços por pessoa e tipo de quarto"
+  }
+}
+

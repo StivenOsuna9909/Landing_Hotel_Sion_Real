@@ -1,0 +1,95 @@
+{
+  "common": {
+    "hotel": "Hotel",
+    "reserve": "Reserve",
+    "contact": "Contact",
+    "rooms": "Rooms",
+    "gallery": "Gallery",
+    "home": "Home"
+  },
+  "hero": {
+    "title": "Sion Real",
+    "subtitle": "We strive to offer better service.",
+    "reserveNow": "Reserve Now",
+    "viewRooms": "View Rooms"
+  },
+  "rooms": {
+    "title": "Our Rooms",
+    "subtitle": "Each room has been designed to offer a unique experience of comfort and elegance",
+    "accommodation": "Accommodation",
+    "reserveRoom": "Reserve this Room",
+    "family": {
+      "name": "Family Room",
+      "description": "Spacious room with multiple beds, ideal for families or groups. TV, air conditioning and private bathroom."
+    },
+    "triple": {
+      "name": "Triple Room",
+      "description": "Comfortable room with three beds, perfect for friends or small groups. All amenities included."
+    },
+    "double": {
+      "name": "Double Room",
+      "description": "Cozy and affordable room for two people. Includes private bathroom and all basic amenities."
+    },
+    "features": {
+      "multipleBeds": "Multiple Beds",
+      "threeBeds": "3 Beds",
+      "twoBeds": "2 Beds",
+      "fourGuests": "4 Guests",
+      "threeGuests": "3 Guests",
+      "twoGuests": "2 Guests",
+      "wifi": "Free WiFi",
+      "tv": "TV",
+      "ac": "Air Conditioning or fan only",
+      "privateBath": "Private Bathroom",
+      "laundry": "Laundry and ironing services",
+      "coffeeStation": "Unlimited coffee and water station at reception"
+    }
+  },
+  "booking": {
+    "title": "Book Your Stay",
+    "subtitle": "Complete the form to check availability and rates",
+    "checkIn": "Check-in Date",
+    "checkOut": "Check-out Date",
+    "guests": "Number of Guests",
+    "roomType": "Room Type",
+    "nights": "Nights",
+    "total": "Total",
+    "confirmReservation": "Confirm Reservation",
+    "errors": {
+      "checkInRequired": "Select check-in date",
+      "checkInPast": "Date cannot be before today",
+      "checkOutRequired": "Select check-out date",
+      "checkOutBefore": "Must be after check-in",
+      "guestsMin": "Minimum 1 guest",
+      "guestsMax": "Maximum 10 guests",
+      "roomRequired": "Select a room"
+    }
+  },
+  "contact": {
+    "title": "Find Us",
+    "address": "Address",
+    "phone": "Phone",
+    "receptionHours": "Reception Hours",
+    "receptionHoursValue": "24 hours, 7 days a week",
+    "addressValue": "Cl. 7 # 3-25<br />Neiva, Huila<br />Colombia"
+  },
+  "footer": {
+    "description": "A luxury retreat where Colombian elegance merges with modern comfort.",
+    "links": "Links",
+    "follow": "Follow Us",
+    "rights": "© {{year}} Hotel Sion Real. All rights reserved."
+  },
+  "gallery": {
+    "title": "Discover",
+    "subtitle": "Our Spaces"
+  },
+  "videos": {
+    "title": "Learn More",
+    "subtitle": "Videos of our facilities"
+  },
+  "tariff": {
+    "title": "Tariff",
+    "subtitle": "Prices per person and room type"
+  }
+}
+
