@@ -20,16 +20,16 @@ Crea un archivo `.env` en la raíz del proyecto con:
 
 ```env
 # Clave pública de Wompi (puede estar en el frontend)
-VITE_WOMPI_PUBLIC_KEY=pub_test_xxxxxxxxxxxxxxxxxxxxx
-
-# Token de aceptación (opcional, puede venir del backend)
-VITE_WOMPI_ACCEPTANCE_TOKEN=xxxxxxxxxxxxxxxxxxxxx
+# Producción:
+VITE_WOMPI_PUBLIC_KEY=pub_prod_4girIl1kpKyFJpOOPc92grI3hTfO9dje
+# Sandbox (para pruebas):
+# VITE_WOMPI_PUBLIC_KEY=pub_test_xxxxxxxxxxxxxxxxxxxxx
 
 # URL de la API de Wompi
-# Para pruebas (sandbox):
-VITE_WOMPI_API_URL=https://sandbox.wompi.co/v1
-# Para producción:
-# VITE_WOMPI_API_URL=https://production.wompi.co/v1
+# Producción:
+VITE_WOMPI_API_URL=https://production.wompi.co/v1
+# Sandbox (para pruebas):
+# VITE_WOMPI_API_URL=https://sandbox.wompi.co/v1
 ```
 
 ### 3. Ambiente de Pruebas (Sandbox)
@@ -49,7 +49,18 @@ Wompi enviará notificaciones a tu backend cuando:
 - Una transacción sea rechazada
 - Una transacción cambie de estado
 
-Configura un endpoint en tu backend para recibir estos webhooks y actualizar el estado de las reservas.
+**URL del Webhook en Producción:**
+```
+https://qdahnzvrkqpaphncdvrn.supabase.co/functions/v1/wompi-webhook
+```
+
+**Configuración en Wompi:**
+1. Ve a https://comercios.wompi.co/
+2. Configuración → Webhooks
+3. Agrega la URL del webhook
+4. Selecciona el evento: `transaction.updated`
+
+Para más detalles, consulta `WOMPI_PRODUCTION_SETUP.md`
 
 ### 5. Flujo de Pago
 

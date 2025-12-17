@@ -14,14 +14,14 @@ export const tariffs: Tariff[] = [
     category: 'onePerson',
     options: [
       { type: 'withFan', price: 50000 },
-      { type: 'airConditioning', price: 65000 },
+      { type: 'airConditioning', price: 70000 },
     ],
   },
   {
     category: 'twoPersonsCouple',
     options: [
-      { type: 'withFan', price: 65000 },
-      { type: 'airConditioning', price: 85000 },
+      { type: 'withFan', price: 70000 },
+      { type: 'airConditioning', price: 90000 },
     ],
   },
   {
@@ -34,7 +34,7 @@ export const tariffs: Tariff[] = [
   {
     category: 'groupRoom',
     options: [
-      { type: 'perPerson', price: 40000, note: 'withAirConditioning' },
+      { type: 'perPerson', price: 45000, note: 'withAirConditioning' },
     ],
   },
 ];
