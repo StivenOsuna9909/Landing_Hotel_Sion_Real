@@ -64,6 +64,9 @@ export async function createWompiTransaction(
     const acceptanceToken = import.meta.env.VITE_WOMPI_ACCEPTANCE_TOKEN || '';
     
     // Estructura de transacción según documentación de Wompi
+    // Para PSE y Nequi, requerimos redirect_url después del pago
+    const redirectUrl = `${window.location.origin}/payment/success`;
+    
     const wompiTransaction = {
       amount_in_cents: transaction.amount_in_cents,
       currency: transaction.currency,
@@ -75,16 +78,20 @@ export async function createWompiTransaction(
         }),
       },
       reference: transaction.reference,
+      redirect_url: redirectUrl,
       ...(transaction.customer_data && {
         customer_data: transaction.customer_data
       }),
-      ...(transaction.shipping_address && {
+      // Shipping address solo para métodos que lo requieran
+      ...(transaction.shipping_address && transaction.payment_method.type !== 'NEQUI' && transaction.payment_method.type !== 'PSE' ? {
         shipping_address: transaction.shipping_address
-      }),
-      ...(acceptanceToken && {
-        acceptance_token: acceptanceToken
-      }),
+      } : {}),
     };
+
+    console.log('Enviando transacción a Wompi:', {
+      url: `${WOMPI_API_URL}/transactions`,
+      transaction: wompiTransaction
+    });
 
     const response = await fetch(`${WOMPI_API_URL}/transactions`, {
       method: 'POST',
@@ -97,10 +104,26 @@ export async function createWompiTransaction(
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      const errorMessage = errorData.error?.message || 
-                          errorData.message || 
-                          `Error al crear transacción: ${response.status} ${response.statusText}`;
-      throw new Error(errorMessage);
+      console.error('Error completo de Wompi:', {
+        status: response.status,
+        statusText: response.statusText,
+        errorData: errorData
+      });
+      
+      // Mensajes más descriptivos según el tipo de error
+      let errorMessage = errorData.error?.message || errorData.message;
+      
+      if (response.status === 422) {
+        errorMessage = errorData.error?.message || 
+                      'Los datos de la transacción no son válidos. Verifica que todos los campos requeridos estén completos.';
+        console.error('Errores de validación:', errorData.error?.details || errorData);
+      } else if (response.status === 401) {
+        errorMessage = 'Error de autenticación con Wompi. Verifica las credenciales.';
+      } else if (response.status === 400) {
+        errorMessage = errorData.error?.message || 'Solicitud incorrecta a Wompi.';
+      }
+      
+      throw new Error(errorMessage || `Error al crear transacción: ${response.status} ${response.statusText}`);
     }
 
     const data: WompiResponse = await response.json();

@@ -121,12 +121,13 @@ const Checkout = () => {
             phone_number: customerData.phoneNumber,
             legal_id: customerData.legalId || customerData.phoneNumber, // Usar teléfono si no hay cédula
           },
-          shipping_address: {
-            address_line_1: 'Calle 7 No. 3-24 Barrio Centro',
-            city: 'Neiva',
-            country: 'CO',
-            region: 'Huila',
-          },
+          // Shipping address no es requerido para PSE y Nequi
+          // shipping_address: {
+          //   address_line_1: 'Calle 7 No. 3-24 Barrio Centro',
+          //   city: 'Neiva',
+          //   country: 'CO',
+          //   region: 'Huila',
+          // },
         },
         wompiPublicKey
       );

@@ -9,6 +9,7 @@ export interface Tariff {
   options: TariffOption[];
 }
 
+// Updated prices - 2024
 export const tariffs: Tariff[] = [
   {
     category: 'onePerson',

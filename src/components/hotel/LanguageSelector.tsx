@@ -41,7 +41,7 @@ const LanguageSelector = () => {
         aria-label="Select language"
       >
         <Globe size={18} />
-        <span className="hidden sm:inline text-sm font-body">{currentLanguage.flag}</span>
+        <span className="text-sm font-body">{currentLanguage.flag}</span>
         <span className="hidden md:inline text-sm font-body">{currentLanguage.name}</span>
       </button>
 
