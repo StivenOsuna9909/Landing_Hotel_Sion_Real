@@ -171,6 +171,59 @@ export async function createWompiTransaction(
 }
 
 /**
+ * Consulta el estado de una transacción en Wompi usando el ID de transacción
+ * Documentación: https://docs.wompi.co/docs/colombia/api/transacciones/
+ */
+export async function getWompiTransactionStatus(
+  transactionId: string,
+  publicKey: string
+): Promise<{ status: string; approved: boolean; error?: string }> {
+  try {
+    const WOMPI_API_URL = import.meta.env.VITE_WOMPI_API_URL || 'https://production.wompi.co/v1';
+    
+    const response = await fetch(`${WOMPI_API_URL}/transactions/${transactionId}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${publicKey}`,
+      },
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      console.error('Error al consultar transacción en Wompi:', {
+        status: response.status,
+        errorData
+      });
+      
+      return {
+        status: 'ERROR',
+        approved: false,
+        error: errorData.error?.message || `Error ${response.status}: ${response.statusText}`
+      };
+    }
+
+    const data = await response.json();
+    
+    // Wompi retorna el estado en data.status
+    // Estados posibles: APPROVED, PENDING, DECLINED, VOIDED, ERROR
+    const status = data.data?.status || data.status || 'UNKNOWN';
+    const approved = status === 'APPROVED';
+
+    return {
+      status,
+      approved,
+    };
+  } catch (error) {
+    console.error('Error al consultar transacción en Wompi:', error);
+    return {
+      status: 'ERROR',
+      approved: false,
+      error: error instanceof Error ? error.message : 'Error desconocido'
+    };
+  }
+}
+
+/**
  * Genera una referencia única para la transacción
  */
 export function generateTransactionReference(bookingId: string): string {
