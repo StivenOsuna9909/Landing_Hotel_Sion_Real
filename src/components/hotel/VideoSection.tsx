@@ -6,8 +6,8 @@ const VideoSection = () => {
   const { t } = useTranslation();
   
   const videos = [
-    { src: '/videos/IMG_7619', titleKey: 'videos.balconyView' },
-    { src: '/videos/IMG_7627', titleKey: 'videos.facilities' },
+    { src: '/videos/img-7619', titleKey: 'videos.balconyView' },
+    { src: '/videos/img-7627', titleKey: 'videos.facilities' },
     { src: '/videos/IMG_7628', titleKey: 'videos.balconyView2' },
     { src: '/videos/IMG_7631', titleKey: 'videos.facilities' },
     { src: '/videos/IMG_7641', titleKey: 'videos.balconyView3' },
