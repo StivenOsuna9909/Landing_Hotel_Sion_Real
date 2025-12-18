@@ -27,6 +27,7 @@ const BookingForm = () => {
     checkIn: '',
     checkOut: '',
     guests: '2',
+    children: '0',
     room: '',
   });
   const [errors, setErrors] = useState<FormErrors>({});
@@ -102,6 +103,7 @@ const BookingForm = () => {
         checkIn: formData.checkIn,
         checkOut: formData.checkOut,
         guests: formData.guests,
+        children: formData.children,
         room: formData.room,
         nights: total.nights,
         pricePerNight: total.pricePerNight,
@@ -188,11 +190,11 @@ const BookingForm = () => {
               )}
             </div>
 
-            {/* Number of Guests */}
+            {/* Number of Guests (Adults) */}
             <div>
               <label className="flex items-center gap-2 font-body text-sm font-medium text-foreground mb-2">
                 <Users size={16} />
-                {t('booking.guests')}
+                {t('booking.guests')} ({t('booking.adults')})
               </label>
               <select
                 value={formData.guests}
@@ -203,13 +205,32 @@ const BookingForm = () => {
               >
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
                   <option key={num} value={num}>
-                    {num} {num === 1 ? 'Huésped' : 'Huéspedes'}
+                    {num} {num === 1 ? t('booking.adult') : t('booking.adults')}
                   </option>
                 ))}
               </select>
               {errors.guests && (
                 <p className="text-destructive text-xs mt-1">{errors.guests}</p>
               )}
+            </div>
+
+            {/* Number of Children */}
+            <div>
+              <label className="flex items-center gap-2 font-body text-sm font-medium text-foreground mb-2">
+                <Users size={16} />
+                {t('booking.children')}
+              </label>
+              <select
+                value={formData.children}
+                onChange={(e) => setFormData({ ...formData, children: e.target.value })}
+                className="w-full px-4 py-3 rounded-lg border border-input bg-background text-foreground font-body transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
+              >
+                {[0, 1, 2, 3, 4, 5, 6].map((num) => (
+                  <option key={num} value={num}>
+                    {num} {num === 0 ? t('booking.noChildren') : num === 1 ? t('booking.child') : t('booking.children')}
+                  </option>
+                ))}
+              </select>
             </div>
 
             {/* Room Selection */}

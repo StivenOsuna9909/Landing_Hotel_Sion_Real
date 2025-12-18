@@ -9,11 +9,22 @@ type ReservationRow = Database['public']['Tables']['reservations']['Row'];
 type ReservationInsert = Database['public']['Tables']['reservations']['Insert'];
 type ReservationUpdate = Database['public']['Tables']['reservations']['Update'];
 
+export interface MinorInfo {
+  name: string;
+  identityCard: string;
+}
+
+export interface ForeignerInfo {
+  name: string;
+  foreignerId: string;
+}
+
 export interface Reservation {
   id: string;
   checkIn: string;
   checkOut: string;
   guests: number;
+  children: number;
   roomType: string;
   roomName: string;
   nights: number;
@@ -23,6 +34,8 @@ export interface Reservation {
   customerName: string;
   customerPhone: string;
   customerLegalId?: string;
+  minorsInfo?: MinorInfo[];
+  foreignersInfo?: ForeignerInfo[];
   paymentMethod: 'PSE' | 'NEQUI' | 'WHATSAPP';
   status: 'pending' | 'confirmed' | 'paid' | 'cancelled';
   createdAt: string;
@@ -38,6 +51,7 @@ function mapRowToReservation(row: ReservationRow): Reservation {
     checkIn: row.check_in,
     checkOut: row.check_out,
     guests: row.guests,
+    children: (row as any).children || 0,
     roomType: row.room_type,
     roomName: row.room_name,
     nights: row.nights,
@@ -47,6 +61,8 @@ function mapRowToReservation(row: ReservationRow): Reservation {
     customerName: row.customer_name,
     customerPhone: row.customer_phone,
     customerLegalId: row.customer_legal_id || undefined,
+    minorsInfo: (row as any).minors_info ? JSON.parse((row as any).minors_info) : undefined,
+    foreignersInfo: (row as any).foreigners_info ? JSON.parse((row as any).foreigners_info) : undefined,
     paymentMethod: row.payment_method,
     status: row.status,
     createdAt: row.created_at,
@@ -62,6 +78,7 @@ function mapReservationToInsert(reservation: Omit<Reservation, 'id' | 'createdAt
     check_in: reservation.checkIn,
     check_out: reservation.checkOut,
     guests: reservation.guests,
+    children: (reservation.children || 0) as any,
     room_type: reservation.roomType,
     room_name: reservation.roomName,
     nights: reservation.nights,
@@ -71,10 +88,12 @@ function mapReservationToInsert(reservation: Omit<Reservation, 'id' | 'createdAt
     customer_name: reservation.customerName,
     customer_phone: reservation.customerPhone,
     customer_legal_id: reservation.customerLegalId || null,
+    minors_info: reservation.minorsInfo ? JSON.stringify(reservation.minorsInfo) : null,
+    foreigners_info: reservation.foreignersInfo ? JSON.stringify(reservation.foreignersInfo) : null,
     payment_method: reservation.paymentMethod,
     status: reservation.status || 'pending',
     transaction_id: reservation.transactionId || null,
-  };
+  } as any;
 }
 
 /**

@@ -37,32 +37,46 @@ const LanguageSelector = () => {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-3 py-2 rounded-lg bg-background/95 hover:bg-background border-2 border-primary/30 hover:border-primary transition-all text-foreground shadow-sm"
+        className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-primary/10 hover:bg-primary/20 border-2 border-primary/40 hover:border-primary transition-all text-foreground shadow-md hover:shadow-lg min-w-[60px] md:min-w-auto"
         aria-label="Select language"
       >
-        <Globe size={20} className="text-primary" />
-        <span className="text-base font-body font-medium">{currentLanguage.flag}</span>
-        <span className="hidden sm:inline text-sm font-body font-medium">{currentLanguage.name}</span>
+        <Globe size={22} className="text-primary flex-shrink-0" />
+        <span className="text-lg md:text-base font-body font-semibold">{currentLanguage.flag}</span>
+        <span className="hidden lg:inline text-sm font-body font-medium">{currentLanguage.name}</span>
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-56 bg-card border-2 border-primary/20 rounded-xl shadow-elegant overflow-hidden z-[100]">
-          {languages.map((lang) => (
-            <button
-              key={lang.code}
-              onClick={() => handleChangeLanguage(lang.code)}
-              className={`w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-secondary transition-colors ${
-                language === lang.code ? 'bg-secondary border-l-4 border-l-primary' : ''
-              }`}
-            >
-              <span className="text-xl">{lang.flag}</span>
-              <span className="flex-1 font-body text-sm font-medium text-foreground">{lang.name}</span>
-              {language === lang.code && (
-                <Check size={18} className="text-primary font-bold" />
-              )}
-            </button>
-          ))}
-        </div>
+        <>
+          {/* Overlay para móviles */}
+          <div 
+            className="fixed inset-0 bg-black/20 z-[99] md:hidden"
+            onClick={() => setIsOpen(false)}
+          />
+          
+          {/* Dropdown */}
+          <div className="absolute right-0 mt-2 w-64 md:w-56 bg-card border-2 border-primary/30 rounded-xl shadow-2xl overflow-hidden z-[100] animate-in fade-in slide-in-from-top-2">
+            <div className="p-2">
+              <div className="text-xs font-body font-semibold text-muted-foreground uppercase tracking-wider px-3 py-2">
+                Seleccionar Idioma
+              </div>
+              {languages.map((lang) => (
+                <button
+                  key={lang.code}
+                  onClick={() => handleChangeLanguage(lang.code)}
+                  className={`w-full flex items-center gap-3 px-4 py-3.5 text-left hover:bg-secondary transition-colors rounded-lg ${
+                    language === lang.code ? 'bg-primary/10 border-l-4 border-l-primary' : ''
+                  }`}
+                >
+                  <span className="text-2xl">{lang.flag}</span>
+                  <span className="flex-1 font-body text-sm font-medium text-foreground">{lang.name}</span>
+                  {language === lang.code && (
+                    <Check size={20} className="text-primary font-bold" />
+                  )}
+                </button>
+              ))}
+            </div>
+          </div>
+        </>
       )}
     </div>
   );

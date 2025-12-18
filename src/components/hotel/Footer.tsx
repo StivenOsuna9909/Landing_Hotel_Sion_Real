@@ -25,6 +25,7 @@ const Footer = () => {
                 { key: 'gallery', href: '#galeria', label: t('common.gallery') },
                 { key: 'reserve', href: '#reservar', label: t('common.reserve') },
                 { key: 'contact', href: '#contacto', label: t('common.contact') },
+                { key: 'pqrs', href: '/pqrs', label: 'PQRS' },
               ].map((link) => (
                 <a
                   key={link.key}

@@ -22,6 +22,7 @@ const Header = () => {
     { href: '#galeria', label: t('common.gallery') },
     { href: '#reservar', label: t('common.reserve') },
     { href: '#contacto', label: t('common.contact') },
+    { href: '/pqrs', label: 'PQRS' },
   ];
 
   return (

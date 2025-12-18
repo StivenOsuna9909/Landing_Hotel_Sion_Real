@@ -11,6 +11,7 @@ interface BookingData {
   checkIn: string;
   checkOut: string;
   guests: string;
+  children: string;
   room: string;
   nights: number;
   pricePerNight: number;
@@ -18,11 +19,23 @@ interface BookingData {
   roomName: string;
 }
 
+interface MinorInfo {
+  name: string;
+  identityCard: string;
+}
+
+interface ForeignerInfo {
+  name: string;
+  foreignerId: string;
+}
+
 interface CustomerData {
   email: string;
   fullName: string;
   phoneNumber: string;
   legalId?: string;
+  minors?: MinorInfo[];
+  foreigners?: ForeignerInfo[];
 }
 
 const Checkout = () => {
@@ -36,7 +49,12 @@ const Checkout = () => {
     fullName: '',
     phoneNumber: '',
     legalId: '',
+    minors: [],
+    foreigners: [],
   });
+  
+  const [hasMinors, setHasMinors] = useState(false);
+  const [hasForeigners, setHasForeigners] = useState(false);
   
   const [errors, setErrors] = useState<Partial<Record<keyof CustomerData, string>>>({});
   const [isProcessing, setIsProcessing] = useState(false);
@@ -112,6 +130,7 @@ const Checkout = () => {
         checkIn: bookingData!.checkIn,
         checkOut: bookingData!.checkOut,
         guests: parseInt(bookingData!.guests),
+        children: parseInt(bookingData!.children || '0'),
         roomType: bookingData!.room,
         roomName: bookingData!.roomName,
         nights: bookingData!.nights,
@@ -121,6 +140,8 @@ const Checkout = () => {
         customerName: customerData.fullName,
         customerPhone: customerData.phoneNumber,
         customerLegalId: customerData.legalId,
+        minorsInfo: customerData.minors || [],
+        foreignersInfo: customerData.foreigners || [],
         paymentMethod: method, // Guardar el método correcto (PSE o NEQUI)
         status: 'pending',
         transactionId: reference,
@@ -183,6 +204,7 @@ const Checkout = () => {
           checkIn: bookingData!.checkIn,
           checkOut: bookingData!.checkOut,
           guests: parseInt(bookingData!.guests),
+          children: parseInt(bookingData!.children || '0'),
           roomType: bookingData!.room,
           roomName: bookingData!.roomName,
           nights: bookingData!.nights,
@@ -192,6 +214,8 @@ const Checkout = () => {
           customerName: customerData.fullName,
           customerPhone: customerData.phoneNumber,
           customerLegalId: customerData.legalId,
+          minorsInfo: customerData.minors || [],
+          foreignersInfo: customerData.foreigners || [],
           paymentMethod: 'WHATSAPP',
           status: 'pending',
         });
@@ -259,9 +283,15 @@ const Checkout = () => {
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Huéspedes:</span>
+                  <span className="text-muted-foreground">Adultos:</span>
                   <span className="text-foreground font-medium">{bookingData.guests}</span>
                 </div>
+                {parseInt(bookingData.children || '0') > 0 && (
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Niños:</span>
+                    <span className="text-foreground font-medium">{bookingData.children}</span>
+                  </div>
+                )}
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Noches:</span>
                   <span className="text-foreground font-medium">{bookingData.nights}</span>
@@ -364,6 +394,162 @@ const Checkout = () => {
                     placeholder="1234567890"
                     disabled={isProcessing}
                   />
+                </div>
+
+                {/* Información de Niños */}
+                {parseInt(bookingData.children || '0') > 0 && (
+                  <div className="mt-6 pt-6 border-t border-border">
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="font-display text-lg text-foreground">
+                        Información de Menores de Edad ({bookingData.children})
+                      </h3>
+                      <button
+                        type="button"
+                        onClick={() => setHasMinors(!hasMinors)}
+                        className="text-primary text-sm font-body hover:underline"
+                      >
+                        {hasMinors ? 'Ocultar' : 'Agregar'}
+                      </button>
+                    </div>
+                    
+                    {hasMinors && (
+                      <div className="space-y-4">
+                        {Array.from({ length: parseInt(bookingData.children || '0') }).map((_, index) => (
+                          <div key={index} className="bg-secondary rounded-lg p-4 space-y-3">
+                            <h4 className="font-body font-medium text-foreground">Menor {index + 1}</h4>
+                            <div>
+                              <label className="block font-body text-sm font-medium text-foreground mb-2">
+                                Nombre Completo *
+                              </label>
+                              <input
+                                type="text"
+                                value={customerData.minors?.[index]?.name || ''}
+                                onChange={(e) => {
+                                  const newMinors = [...(customerData.minors || [])];
+                                  newMinors[index] = { ...newMinors[index], name: e.target.value };
+                                  setCustomerData({ ...customerData, minors: newMinors });
+                                }}
+                                className="w-full px-4 py-2 rounded-lg border border-input bg-background text-foreground font-body"
+                                placeholder="Nombre del menor"
+                                disabled={isProcessing}
+                              />
+                            </div>
+                            <div>
+                              <label className="block font-body text-sm font-medium text-foreground mb-2">
+                                Tarjeta de Identidad *
+                              </label>
+                              <input
+                                type="text"
+                                value={customerData.minors?.[index]?.identityCard || ''}
+                                onChange={(e) => {
+                                  const newMinors = [...(customerData.minors || [])];
+                                  newMinors[index] = { ...newMinors[index], identityCard: e.target.value };
+                                  setCustomerData({ ...customerData, minors: newMinors });
+                                }}
+                                className="w-full px-4 py-2 rounded-lg border border-input bg-background text-foreground font-body"
+                                placeholder="TI del menor"
+                                disabled={isProcessing}
+                              />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Información de Extranjeros */}
+                <div className="mt-6 pt-6 border-t border-border">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="font-display text-lg text-foreground">
+                      ¿Hay Extranjeros en el Grupo?
+                    </h3>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setHasForeigners(!hasForeigners);
+                        if (!hasForeigners) {
+                          setCustomerData({ ...customerData, foreigners: [{ name: '', foreignerId: '' }] });
+                        } else {
+                          setCustomerData({ ...customerData, foreigners: [] });
+                        }
+                      }}
+                      className="text-primary text-sm font-body hover:underline"
+                    >
+                      {hasForeigners ? 'No hay extranjeros' : 'Sí, hay extranjeros'}
+                    </button>
+                  </div>
+                  
+                  {hasForeigners && (
+                    <div className="space-y-4">
+                      {(customerData.foreigners || []).map((foreigner, index) => (
+                        <div key={index} className="bg-secondary rounded-lg p-4 space-y-3">
+                          <div className="flex items-center justify-between">
+                            <h4 className="font-body font-medium text-foreground">Extranjero {index + 1}</h4>
+                            {(customerData.foreigners || []).length > 1 && (
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  const newForeigners = [...(customerData.foreigners || [])];
+                                  newForeigners.splice(index, 1);
+                                  setCustomerData({ ...customerData, foreigners: newForeigners });
+                                }}
+                                className="text-destructive text-sm font-body hover:underline"
+                              >
+                                Eliminar
+                              </button>
+                            )}
+                          </div>
+                          <div>
+                            <label className="block font-body text-sm font-medium text-foreground mb-2">
+                              Nombre Completo *
+                            </label>
+                            <input
+                              type="text"
+                              value={foreigner.name}
+                              onChange={(e) => {
+                                const newForeigners = [...(customerData.foreigners || [])];
+                                newForeigners[index] = { ...newForeigners[index], name: e.target.value };
+                                setCustomerData({ ...customerData, foreigners: newForeigners });
+                              }}
+                              className="w-full px-4 py-2 rounded-lg border border-input bg-background text-foreground font-body"
+                              placeholder="Nombre del extranjero"
+                              disabled={isProcessing}
+                            />
+                          </div>
+                          <div>
+                            <label className="block font-body text-sm font-medium text-foreground mb-2">
+                              Cédula de Extranjería *
+                            </label>
+                            <input
+                              type="text"
+                              value={foreigner.foreignerId}
+                              onChange={(e) => {
+                                const newForeigners = [...(customerData.foreigners || [])];
+                                newForeigners[index] = { ...newForeigners[index], foreignerId: e.target.value };
+                                setCustomerData({ ...customerData, foreigners: newForeigners });
+                              }}
+                              className="w-full px-4 py-2 rounded-lg border border-input bg-background text-foreground font-body"
+                              placeholder="CE del extranjero"
+                              disabled={isProcessing}
+                            />
+                          </div>
+                        </div>
+                      ))}
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setCustomerData({
+                            ...customerData,
+                            foreigners: [...(customerData.foreigners || []), { name: '', foreignerId: '' }]
+                          });
+                        }}
+                        className="w-full px-4 py-2 rounded-lg border border-primary text-primary font-body hover:bg-primary/10 transition-colors"
+                      >
+                        + Agregar otro extranjero
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
 

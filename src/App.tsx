@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import Checkout from "./pages/Checkout";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import WebhookTest from "./pages/WebhookTest";
+import PQRS from "./pages/PQRS";
 import Login from "./pages/admin/Login";
 import Dashboard from "./pages/admin/Dashboard";
 import NotFound from "./pages/NotFound";
@@ -26,6 +27,7 @@ const App = () => (
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/payment/success" element={<PaymentSuccess />} />
             <Route path="/webhook-test" element={<WebhookTest />} />
+            <Route path="/pqrs" element={<PQRS />} />
             <Route path="/admin/login" element={<Login />} />
             <Route path="/admin/dashboard" element={<Dashboard />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
