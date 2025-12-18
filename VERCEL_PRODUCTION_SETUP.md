@@ -19,17 +19,24 @@ VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFz
 **✅ DEBE estar en Vercel (Frontend):**
 ```
 VITE_WOMPI_PUBLIC_KEY=pub_prod_4girIl1kpKyFJpOOPc92grI3hTfO9dje
-VITE_WOMPI_API_URL=https://production.wompi.co/v1
+VITE_WOMPI_INTEGRITY_SECRET=prod_integrity_3vRVuKah6yxwUbyZ5hWDmnQTAtKzkWFf
+```
+
+**Nota**: `VITE_WOMPI_INTEGRITY_SECRET` es necesario para generar la firma de integridad requerida por el Web Checkout de Wompi.
+
+**✅ También en Vercel (Frontend - para firma de integridad):**
+```
+VITE_WOMPI_INTEGRITY_SECRET=prod_integrity_3vRVuKah6yxwUbyZ5hWDmnQTAtKzkWFf
 ```
 
 **❌ NO debe estar en Vercel (Solo Backend/Supabase Edge Functions):**
 - `prv_prod_bS9ZNAR9vJZwUt7qYfZrPfqtbeAmWBCd` (Llave privada)
 - `prod_events_sXSyd6KBdFytWv9mzco5XKRTR0T6lSSh` (Secreto de eventos)
-- `prod_integrity_3vRVuKah6yxwUbyZ5hWDmnQTAtKzkWFf` (Secreto de integridad)
 
 **Nota**: 
 - La llave pública (`pub_prod_...`) es segura para el frontend
-- Las llaves privadas y secretos SOLO van en Supabase Edge Functions (webhook)
+- El secreto de integridad (`prod_integrity_...`) también puede estar en el frontend (se usa para generar la firma)
+- La llave privada y el secreto de eventos SOLO van en Supabase Edge Functions (webhook)
 - Si no usas pagos, no necesitas configurar estas variables
 
 ### 3. Admin Dashboard (OPCIONAL)

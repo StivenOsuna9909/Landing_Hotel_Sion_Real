@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { CreditCard, ArrowLeft, Shield, Loader2, Mail, User, Phone } from 'lucide-react';
 import Header from '@/components/hotel/Header';
 import Footer from '@/components/hotel/Footer';
-import { createWompiTransaction, generateTransactionReference } from '@/services/wompi';
+import { createWompiCheckoutUrl, generateTransactionReference } from '@/services/wompi';
 import { saveReservation } from '@/services/reservations';
 import { useToast } from '@/hooks/use-toast';
 
@@ -126,8 +126,8 @@ const Checkout = () => {
         transactionId: reference,
       });
 
-      // Crear transacción en Wompi
-      const paymentUrl = await createWompiTransaction(
+      // Crear URL de checkout de Wompi usando Web Checkout
+      const paymentUrl = await createWompiCheckoutUrl(
         {
           amount_in_cents: bookingData!.total * 100, // Wompi espera el monto en centavos
           currency: 'COP',
@@ -141,14 +141,8 @@ const Checkout = () => {
             phone_number: customerData.phoneNumber,
             legal_id: customerData.legalId || customerData.phoneNumber, // Usar teléfono si no hay cédula
           },
-          // Para PSE, shipping_address es requerido con phone_number
-          shipping_address: {
-            address_line_1: 'Calle 7 No. 3-24 Barrio Centro',
-            city: 'Neiva',
-            country: 'CO',
-            region: 'Huila',
-            // phone_number se agregará automáticamente en createWompiTransaction
-          },
+          // shipping_address se construirá automáticamente en createWompiTransaction
+          // con phone_number incluido para PSE/NEQUI
         },
         wompiPublicKey
       );
