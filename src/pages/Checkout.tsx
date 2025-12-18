@@ -106,33 +106,8 @@ const Checkout = () => {
         `${bookingData!.checkIn}-${bookingData!.checkOut}-${Date.now()}`
       );
 
-      // Crear transacción en Wompi
-      const paymentUrl = await createWompiTransaction(
-        {
-          amount_in_cents: bookingData!.total * 100, // Wompi espera el monto en centavos
-          currency: 'COP',
-          customer_email: customerData.email,
-          payment_method: {
-            type: method,
-          },
-          reference: reference,
-          customer_data: {
-            full_name: customerData.fullName,
-            phone_number: customerData.phoneNumber,
-            legal_id: customerData.legalId || customerData.phoneNumber, // Usar teléfono si no hay cédula
-          },
-          // Shipping address no es requerido para PSE y Nequi
-          // shipping_address: {
-          //   address_line_1: 'Calle 7 No. 3-24 Barrio Centro',
-          //   city: 'Neiva',
-          //   country: 'CO',
-          //   region: 'Huila',
-          // },
-        },
-        wompiPublicKey
-      );
-
-      // Guardar reserva como pendiente antes de redirigir
+      // Guardar reserva como pendiente ANTES de crear la transacción en Wompi
+      // Esto asegura que se guarde con el método de pago correcto
       await saveReservation({
         checkIn: bookingData!.checkIn,
         checkOut: bookingData!.checkOut,
@@ -146,10 +121,37 @@ const Checkout = () => {
         customerName: customerData.fullName,
         customerPhone: customerData.phoneNumber,
         customerLegalId: customerData.legalId,
-        paymentMethod: method,
+        paymentMethod: method, // Guardar el método correcto (PSE o NEQUI)
         status: 'pending',
         transactionId: reference,
       });
+
+      // Crear transacción en Wompi
+      const paymentUrl = await createWompiTransaction(
+        {
+          amount_in_cents: bookingData!.total * 100, // Wompi espera el monto en centavos
+          currency: 'COP',
+          customer_email: customerData.email,
+          payment_method: {
+            type: method, // PSE o NEQUI
+          },
+          reference: reference,
+          customer_data: {
+            full_name: customerData.fullName,
+            phone_number: customerData.phoneNumber,
+            legal_id: customerData.legalId || customerData.phoneNumber, // Usar teléfono si no hay cédula
+          },
+          // Para PSE, shipping_address es requerido con phone_number
+          shipping_address: {
+            address_line_1: 'Calle 7 No. 3-24 Barrio Centro',
+            city: 'Neiva',
+            country: 'CO',
+            region: 'Huila',
+            // phone_number se agregará automáticamente en createWompiTransaction
+          },
+        },
+        wompiPublicKey
+      );
 
       // Redirigir al usuario a la URL de pago de Wompi
       window.location.href = paymentUrl;

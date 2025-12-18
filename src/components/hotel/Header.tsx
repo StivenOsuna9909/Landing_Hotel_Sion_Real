@@ -51,14 +51,17 @@ const Header = () => {
           <LanguageSelector />
         </nav>
 
-        {/* Mobile Menu Button */}
-        <button
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="md:hidden text-foreground p-2"
-          aria-label="Toggle menu"
-        >
-          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        {/* Mobile: Language Selector + Menu Button */}
+        <div className="md:hidden flex items-center gap-3">
+          <LanguageSelector />
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="text-foreground p-2"
+            aria-label="Toggle menu"
+          >
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Navigation */}
@@ -78,9 +81,6 @@ const Header = () => {
               {link.label}
             </a>
           ))}
-          <div className="px-6">
-            <LanguageSelector />
-          </div>
         </nav>
       </div>
     </header>

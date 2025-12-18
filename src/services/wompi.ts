@@ -67,6 +67,9 @@ export async function createWompiTransaction(
     // Para PSE y Nequi, requerimos redirect_url después del pago
     const redirectUrl = `${window.location.origin}/payment/success`;
     
+    // Para PSE, Wompi requiere shipping_address con phone_number
+    const needsShippingAddress = transaction.payment_method.type === 'PSE' || transaction.payment_method.type === 'NEQUI';
+    
     const wompiTransaction = {
       amount_in_cents: transaction.amount_in_cents,
       currency: transaction.currency,
@@ -82,8 +85,18 @@ export async function createWompiTransaction(
       ...(transaction.customer_data && {
         customer_data: transaction.customer_data
       }),
-      // Shipping address solo para métodos que lo requieran
-      ...(transaction.shipping_address && transaction.payment_method.type !== 'NEQUI' && transaction.payment_method.type !== 'PSE' ? {
+      // Para PSE, shipping_address es requerido con phone_number
+      ...(needsShippingAddress && transaction.customer_data ? {
+        shipping_address: {
+          ...(transaction.shipping_address || {}),
+          phone_number: transaction.customer_data.phone_number,
+          // Valores por defecto si no se proporcionan
+          address_line_1: transaction.shipping_address?.address_line_1 || 'Calle 7 No. 3-24 Barrio Centro',
+          city: transaction.shipping_address?.city || 'Neiva',
+          country: transaction.shipping_address?.country || 'CO',
+          region: transaction.shipping_address?.region || 'Huila',
+        }
+      } : transaction.shipping_address ? {
         shipping_address: transaction.shipping_address
       } : {}),
     };

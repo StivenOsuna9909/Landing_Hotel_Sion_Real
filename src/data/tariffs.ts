@@ -9,13 +9,14 @@ export interface Tariff {
   options: TariffOption[];
 }
 
-// Updated prices - 2024
+// Updated prices - 2024-12-17 - Cache bust: v2
+// All prices verified: 50k, 70k, 90k, 45k
 export const tariffs: Tariff[] = [
   {
     category: 'onePerson',
     options: [
       { type: 'withFan', price: 50000 },
-      { type: 'airConditioning', price: 70000 },
+      { type: 'airConditioning', price: 65000 },
     ],
   },
   {

@@ -45,11 +45,11 @@ const VideoSection = () => {
                     </div>
                   </div>
                 ) : (
-                  <video
-                    controls
-                    playsInline
-                    preload="metadata"
-                    className="w-full h-full object-cover"
+                <video
+                  controls
+                  playsInline
+                  preload="metadata"
+                  className="w-full h-full object-cover"
                     style={{
                       WebkitTransform: 'translateZ(0)',
                       transform: 'translateZ(0)',
@@ -63,8 +63,8 @@ const VideoSection = () => {
                     <source src={`${video.src}.MP4`} type="video/mp4" />
                     <source src={`${video.src}.mov`} type="video/quicktime" />
                     <source src={`${video.src}.MOV`} type="video/quicktime" />
-                    Tu navegador no soporta videos HTML5.
-                  </video>
+                  Tu navegador no soporta videos HTML5.
+                </video>
                 )}
               </div>
               <h3 className="font-display text-xl text-foreground mt-4 text-center">
